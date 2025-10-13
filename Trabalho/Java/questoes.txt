@@ -1,0 +1,86 @@
+*****************************************************************************************************
+T290 - Resolução de Problemas com Grafos
+Orientador: Prof. Me Ricardo Carubbi
+*****************************************************************************************************
+
+Trabalho: Problema do Caixeiro Viajante
+
+Informe abaixo o(s) nome(s):
+- Aluno(a) 1: ______________________________
+- Aluno(a) 2: ______________________________
+
+Q1. Explique como você implementou a heurística de inserção pelo vizinho mais próximo.
+Comente também como você atualiza as ligações da lista encadeada circular após inserir o novo ponto.
+
+Resposta:
+Formulei através de lista circular, onde se caso não tenha um tour ativo, inicio um seguindo seguintes passos:
+// Para o tour vazio, devo verifico e inicio um novo
+if (start == null) {
+    start = new Node(); // Crio um novo Nó
+    start.point = p; // Adiciono a coordenada P ao Nó
+    start.next = start; // Aponta para si mesmo para mantermos o tour circular
+    count++; // Incrementei um P então adiciona mais um ao contador
+    return; // Retorno, pois já adicionei o ponto
+}
+Caso já tenha uma coordenada P dentro do tour, ele começa a procurar o vizinho mais Próximo, segue o código comentado:
+
+Node current = start; // O começo do tour que vai passear por todos os pontos dentro do tour
+Node nearest = start; // Ponto mais próximo, vai guardar o ponto mais próximo encontrado por current
+
+double minDistance = p.distanceTo(start.point); // Distância mínima do ponto atual, sem que tenha verificado (rodado no loop) todos os pontos.
+
+do {
+    double dist = p.distanceTo(current.point); // Distância do Próximo ponto
+    // Para segunda iteração não irá entrar nesse if, somente a partir da 3, pois ele irá identificar que a minDist e a dist são iguais,
+    // mas ao passar para o próximo que aponta para A, irá identificar que tem uma diferença, já que não irá sair do loop
+    if (dist < minDistance) { // Se o proximo ponto for menor que a distância mínima (o ponto atual) ele realiza a troca do minDistance e do nearest
+        minDistance = dist; // Atualiza a distância para a distancia do próximo ponto
+        nearest = current; // Atualiza para o próximo ponto
+    }
+
+    current = current.next; // Ponteiro avança para o próximo nó, em busca do ponto mais próximo
+    //Current irá para o próximo Nó do tour, fazendo com que Current seja != start na terceira iteração
+} while (current != start);// Current irá visitar todos os pontos até voltar para o ponto de inicio (start)
+
+Após essa verificação e apontar qual é o próximo ponto, está na hora de inserir ele, que ficou assim:
+// Insere um novo Nó após o nearest (vizinho mais próximo) for encontrado
+Node newNode = new Node(); // Cria um novo nó para a coordenada P
+newNode.point = p; // Adiciona o ponto P ao novo nó
+newNode.next = nearest.next; // Sincroniza o próximo do novo nó para o próximo do nearest
+nearest.next = newNode; // O próximo do nearest agora aponta para o novo nó (A -> P)
+count++; // Incrementa o contador de pontos
+
+Q2. Explique por que é melhor usar uma lista encadeada circular em vez de um vetor.
+Considere a complexidade das operações de inserção e remoção de pontos.
+
+Resposta:
+
+
+Q3. Preencha os comprimentos calculados pela heurística do vizinho mais próximo.
+
+| Arquivo de dados | Vizinho mais próximo |
+| ---------------- | -------------------- |
+| tsp10.txt        |                      |
+| tsp100.txt       |                      |
+| tsp1000.txt      |                      |
+| usa13509.txt     |                      |
+
+Q4. Realize a análise de tempo abaixo:
+
+- Estime o tempo de execução (em segundos) da heurística.
+- Execute a heurística para \(n = 1000\) e dobre \(n\) repetidamente até que o tempo de execução ultrapasse 60 segundos.
+- Utilize o **TSPTimer** com a opção **-Xint** para desativar otimizações do compilador.
+
+| n      | Tempo (s) ingênuo | Tempo (s) com KdTree |
+| ------ | ----------------- | -------------------- |
+| 1000   |                   |                      |
+| 2000   |                   |                      |
+| 4000   |                   |                      |
+| 8000   |                   |                      |
+| 16000  |                   |                      |
+| 32000  |                   |                      |
+| 64000  |                   |                      |
+| 128000 |                   |                      |
+| 256000 |                   |                      |
+| 512000 |                   |                      |
+| 1024000|                   |                      |
