@@ -15,8 +15,8 @@ import algs4.StdDraw;
 import algs4.StdIn;
 
 public class Point {
-    private final double x; // coordenada cartesiana x
-    private final double y; // coordenada cartesiana y
+    final double x; // coordenada cartesiana x
+    final double y; // coordenada cartesiana y
 
     // cria e inicializa um ponto com (x, y) dados
     public Point(double x, double y) {

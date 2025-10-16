@@ -54,16 +54,28 @@ Q2. Explique por que é melhor usar uma lista encadeada circular em vez de um ve
 Considere a complexidade das operações de inserção e remoção de pontos.
 
 Resposta:
+Com a lista encadeada circular, quando encontro o “nearest”, eu insiro o novo ponto mudando só dois ponteiros. Fica assim:
+newNode.next = nearest.next;
+nearest.next = newNode;
+Isso é O(1) por inserção.
 
+No vetor, para “enfiar” um ponto no meio, preciso deslocar todos os elementos à direita uma posição. Isso custa O(n) a cada inserção. Remover no meio também desloca, então também é O(n).
+
+A circularidade ajuda a fechar o tour naturalmente: o último já aponta para o primeiro. Fica fácil percorrer e calcular o comprimento sem casos especiais.
+
+Resumo de custos:
+
+Lista circular: inserir após um nó conhecido = O(1); remover (com o anterior) = O(1).
+Vetor: inserir/remover no meio = O(n) (por causa dos deslocamentos).
 
 Q3. Preencha os comprimentos calculados pela heurística do vizinho mais próximo.
 
 | Arquivo de dados | Vizinho mais próximo |
 | ---------------- | -------------------- |
-| tsp10.txt        |                      |
-| tsp100.txt       |                      |
-| tsp1000.txt      |                      |
-| usa13509.txt     |                      |
+| tsp10.txt        | 1566.1363051360363   |
+| tsp100.txt       | 7389.929676351667    |
+| tsp1000.txt      | 27868.710634854797   |
+| usa13509.txt     | 77449.97941714071    |
 
 Q4. Realize a análise de tempo abaixo:
 
@@ -72,15 +84,15 @@ Q4. Realize a análise de tempo abaixo:
 - Utilize o **TSPTimer** com a opção **-Xint** para desativar otimizações do compilador.
 
 | n      | Tempo (s) ingênuo | Tempo (s) com KdTree |
-| ------ | ----------------- | -------------------- |
-| 1000   |                   |                      |
-| 2000   |                   |                      |
-| 4000   |                   |                      |
-| 8000   |                   |                      |
-| 16000  |                   |                      |
-| 32000  |                   |                      |
-| 64000  |                   |                      |
-| 128000 |                   |                      |
-| 256000 |                   |                      |
-| 512000 |                   |                      |
-| 1024000|                   |                      |
+| ------ | ------------------ | --------------------|
+| 1000   | 0.012              | 0.008               |
+| 2000   | 0.094              | 0.012               |
+| 4000   | 0.350              | 0.012               |
+| 8000   | 1.279              | 0.019               |
+| 16000  | 5.149              | 0.031               |
+| 32000  | 21.597             | 0.062               |
+| 64000  | 89.983             | 0.115               |
+| 128000 | ~375.0 (estimado)  | 0.249               |
+| 256000 |                    | 0.57                |
+| 512000 |                    | 1.283               |
+| 1024000|                    | 2.895               |

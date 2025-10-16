@@ -14,6 +14,7 @@
  *
  **************************************************************************** */
 
+ import algs4.Point2D;
  import algs4.StdRandom;
  import algs4.Stopwatch;
  import algs4.StdOut;

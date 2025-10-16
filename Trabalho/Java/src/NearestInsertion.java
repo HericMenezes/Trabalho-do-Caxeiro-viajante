@@ -1,4 +1,5 @@
 import algs4.In;
+import algs4.Point2D;
 import algs4.StdOut;
 import algs4.StdDraw;
 
@@ -21,7 +22,7 @@ public class NearestInsertion {
         StdDraw.setYscale(-border, height);
         StdDraw.enableDoubleBuffering();
 
-        Tour tour = new Tour();
+        Tour tour = new Tour(true);
         while (!in.isEmpty()) {
             double x = in.readDouble();
             double y = in.readDouble();

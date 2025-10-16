@@ -19,7 +19,8 @@
 
  import java.util.ArrayList;
 import algs4.In;
-import algs4.StdDraw;
+ import algs4.Point2D;
+ import algs4.StdDraw;
 import algs4.StdOut;
 
  public class TSPVisualizer {
@@ -70,7 +71,7 @@ import algs4.StdOut;
  
                  // imprime coordenadas dos novos pontos
                  StdOut.println(x + " " + y);
- 
+
                  Point p = new Point(x, y);
  
                  points.add(p);
@@ -108,8 +109,8 @@ import algs4.StdOut;
                  // local (x, y) do clique do mouse
                  double x = StdDraw.mouseX();
                  double y = StdDraw.mouseY();
- 
-                Point p = new Point(x, y);
+
+                 Point p = new Point(x, y);
 
                 points.add(p);
 
